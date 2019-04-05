@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe TodoList, type: :model do
+  describe "Todo List Associations" do
+    it { is_expected.to have_many :todo_list_items }
+  end
+
   describe "Create a Todo List" do
   	
   	context "todo list must have a title" do
