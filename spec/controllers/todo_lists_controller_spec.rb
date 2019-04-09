@@ -5,15 +5,20 @@ RSpec.describe TodoListsController, type: :controller do
 		
 		before(:example) { get :index }
 
-		context "it returns index for all Todo Lists" do
+		context "it returns index of all Todo Lists" do
 
 			it "should have the status :ok" do
 				expect(response).to have_http_status(:ok)
 			end
 
 			it "should render 'index' template" do
-				# byebug
-				expect(response).to render_template({})
+				expect(response).to render_template(:index)
+			end
+
+			it "should render 'index' as json" do
+				get :index, format: :json
+				# expect(response).to render_template({})
+				expect(response.body).to eq "[]"
 			end
 		end
 	end
