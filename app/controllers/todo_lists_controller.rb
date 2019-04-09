@@ -18,4 +18,14 @@ class TodoListsController < ApplicationController
 			end
 		end
 	end
+
+	def new
+		@todo_list = TodoList.new
+		respond_to do |format|
+			format.html
+			format.json do 
+				render json: @todo_list
+			end
+		end
+	end
 end
