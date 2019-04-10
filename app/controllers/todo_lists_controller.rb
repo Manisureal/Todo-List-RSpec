@@ -28,4 +28,20 @@ class TodoListsController < ApplicationController
 			end
 		end
 	end
+
+	def create
+		@todo_list = TodoList.new(permitted_params)
+		if @todo_list.save
+		   redirect_to :index
+		   flash[:success] = "TodoList is successfully created"
+		 else
+		   render :new 
+		   flash[:error] =  "Error while creating TodoList"
+		end
+	end
+
+	private
+	    def permitted_params
+	      params.require(:todo_list).permit(:title)
+	    end
 end

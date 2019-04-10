@@ -65,4 +65,38 @@ RSpec.describe TodoListsController, type: :controller do
 			end
 		end
 	end
+
+	describe "POST create" do
+		context "Successful: Create a Todo List" do
+			before { post :create, params: { todo_list: { title: "my first todo list" } } }
+
+			it "should respond with status 302" do
+				expect(response).to have_http_status(302)
+			end
+
+			it "should redirect to index page" do
+				expect(response).to redirect_to(:index)
+			end
+
+			it "should flash success message" do
+				expect(flash[:success]).to match("TodoList is successfully created")
+			end
+
+			it "responds to html by default" do
+				expect(response.content_type).to eq("text/html")
+			end
+		end
+
+		context "Unsuccessful: Create a Todo List" do
+			before { post :create, params: { todo_list: { title: ""} } }
+
+			it "should render new on failure" do
+				expect(response).to render_template(:new)
+			end
+
+			it "should respond with flash error message" do
+				expect(flash[:error]).to match("Error while creating TodoList")
+			end
+		end
+	end
 end
