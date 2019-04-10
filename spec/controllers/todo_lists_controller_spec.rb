@@ -67,7 +67,7 @@ RSpec.describe TodoListsController, type: :controller do
 	end
 
 	describe "POST create" do
-		context "Successful: Create a Todo List" do
+		context "Successful: Create a Todo List format:HTML" do
 			before { post :create, params: { todo_list: { title: "my first todo list" } } }
 
 			it "should respond with status 302" do
@@ -87,7 +87,7 @@ RSpec.describe TodoListsController, type: :controller do
 			end
 		end
 
-		context "Unsuccessful: Create a Todo List" do
+		context "Unsuccessful: Create a Todo List format:HTML" do
 			before { post :create, params: { todo_list: { title: ""} } }
 
 			it "should render new on failure" do
@@ -96,6 +96,44 @@ RSpec.describe TodoListsController, type: :controller do
 
 			it "should respond with flash error message" do
 				expect(flash[:error]).to match("Error while creating TodoList")
+			end
+		end
+
+		context "Successful: Create a Todo List format:JSON" do
+			before { post :create, params: { todo_list: {title: "my json todo list"}, format: :json} }
+
+			it "should respond with status :200" do
+				expect(response).to have_http_status(200) 
+			end
+
+			it "should display success message" do
+				expect(JSON.parse(response.body)["message"]).to match("successfully created a todo list!")
+			end
+
+			it "responds to custom formats when provided in the params" do
+				expect(response.content_type).to eq "application/json"
+			end
+
+			# it "should display contents of todo list" do
+			# 	parsed_body = JSON.parse(response.body)
+			# 	byebug
+			# 	expect(parsed_body.title).to eq todo_list[0]
+			# end
+		end
+
+		context "Unsuccessful: Create a Todo List format:JSON" do
+			before { post :create, params: { todo_list: {title: ""}, format: :json} }
+
+			it "should respond with HTTP status code :422" do
+				expect(response).to have_http_status(422)
+			end
+
+			it "should provide with error message" do
+				expect(JSON.parse(response.body)["errors"][0]).to match("Title can't be blank")
+			end
+
+			it "should have responded to JSON format" do
+				expect(response.content_type).to eq "application/json"
 			end
 		end
 	end
