@@ -38,7 +38,7 @@ RSpec.describe TodoListsController, type: :controller do
 			end
 			it "should also render :show as json" do
 				get :show, params: { id: todo_list }, as: :json
-				expect(response).to render_template({})
+				expect(JSON.parse(response.body)['title']).to eq(todo_list.title)
 			end
 
 		end
@@ -46,6 +46,8 @@ RSpec.describe TodoListsController, type: :controller do
 
 	describe "GET new" do
 		context "show a new form for Todo List" do
+
+			let(:new_todo_list) { TodoList.new }
 
 			before { get :new }
 
@@ -59,7 +61,7 @@ RSpec.describe TodoListsController, type: :controller do
 
 			it "should render a new template in JSON" do
 				get :new, as: :json
-				expect(response).to render_template({})
+				expect(response).to have_http_status(:ok)
 			end
 		end
 	end
