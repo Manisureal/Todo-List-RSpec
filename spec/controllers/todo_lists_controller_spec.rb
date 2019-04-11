@@ -137,4 +137,21 @@ RSpec.describe TodoListsController, type: :controller do
 			end
 		end
 	end
+
+	describe "GET edit" do
+		let(:todo_list) { TodoList.create title: "will edit this todolist"}
+		before { get :edit, params: { id: todo_list } }
+
+		it "should respond with HTTP status :ok(200)" do
+			expect(response).to have_http_status(200)
+		end
+
+		it "should render HTML template" do
+			expect(response).to render_template(:edit)
+		end
+
+		it 'assigns the todo list' do
+	      expect(assigns(:todo_list)).to eq(todo_list)
+	    end
+	end
 end

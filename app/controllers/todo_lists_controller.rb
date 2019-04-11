@@ -55,6 +55,11 @@ class TodoListsController < ApplicationController
 		end
 	end
 
+	def edit
+		@todo_list = TodoList.find(params[:id])
+		# byebug
+	end
+
 	private
 	    def permitted_params
 	      params.require(:todo_list).permit(:title)
