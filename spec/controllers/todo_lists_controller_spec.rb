@@ -185,11 +185,25 @@ RSpec.describe TodoListsController, type: :controller do
 			it "should render :edit" do
 				expect(response).to render_template(:edit)
 			end
-			
+
 			it "should flash error message" do
 				expect(flash[:error]).to eq "TodoList update failed!"
 				expect(flash[:error]).to be_present
 			end
+		end
+	end
+
+	describe "DELETE destroy" do 
+		let(:todo_list) { TodoList.create title: "this one is to be deleted" }
+
+		before { delete :destroy, params: { id: todo_list } }
+
+		it "shoudld redirect to index page" do
+			expect(response).to redirect_to(:index)
+		end
+
+		it "flash notice to confirm deletion" do
+			expect(flash[:notice]).to be_present
 		end
 	end
 end

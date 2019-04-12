@@ -73,6 +73,13 @@ class TodoListsController < ApplicationController
 		# byebug
 	end
 
+	def destroy
+		@todo_list = TodoList.find(params[:id])
+		@todo_list.destroy 
+		redirect_to :index
+		flash[:notice] = "Todolist successfully deleted!"
+	end
+
 	private
 	    def permitted_params
 	      params.require(:todo_list).permit(:title)
