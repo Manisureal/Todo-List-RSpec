@@ -60,6 +60,17 @@ class TodoListsController < ApplicationController
 		# byebug
 	end
 
+	def update
+		@todo_list = TodoList.find(params[:id])
+		@todo_list.update_attributes(permitted_params)
+		if @todo_list.save
+			redirect_to todo_list_path(@todo_list.id)
+			flash[:success] = "TodoList successfully Updated!"
+			# byebug
+		end
+		# byebug
+	end
+
 	private
 	    def permitted_params
 	      params.require(:todo_list).permit(:title)

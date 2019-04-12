@@ -154,4 +154,27 @@ RSpec.describe TodoListsController, type: :controller do
 	      expect(assigns(:todo_list)).to eq(todo_list)
 	    end
 	end
+
+	describe "PATCH update" do
+		context "on successfull update" do
+			let(:todo_list) { TodoList.create title: "this title will be updated" }
+
+			let(:update_attrib) { { title: "updated title" } }
+
+			before { patch :update, params: { id: todo_list.id, todo_list: update_attrib } }
+
+			it "returns with a http status :302" do
+				expect(response).to have_http_status(:redirect)
+				expect(response).to have_http_status(302)
+			end
+
+			it "should redirect to show page" do
+				expect(response).to redirect_to("/todo_lists/#{todo_list.id}")
+			end
+
+			it "should flash a success message" do
+				expect(flash[:success]).to eq "TodoList successfully Updated!"
+			end
+		end
+	end
 end
