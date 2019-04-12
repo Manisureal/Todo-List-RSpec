@@ -176,5 +176,20 @@ RSpec.describe TodoListsController, type: :controller do
 				expect(flash[:success]).to eq "TodoList successfully Updated!"
 			end
 		end
+
+		context "on unsuccessful update" do
+			let(:todo_list) { TodoList.create title: "this title should not update" }
+
+			before { patch :update, params: {id: todo_list.id, todo_list: { title: "" } } }
+
+			it "should render :edit" do
+				expect(response).to render_template(:edit)
+			end
+			
+			it "should flash error message" do
+				expect(flash[:error]).to eq "TodoList update failed!"
+				expect(flash[:error]).to be_present
+			end
+		end
 	end
 end
