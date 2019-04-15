@@ -20,6 +20,10 @@ class TodoListItemsController < ApplicationController
 		
 	end
 
+	def edit
+		
+	end
+
 	private
 
 	def todo_list_items_params

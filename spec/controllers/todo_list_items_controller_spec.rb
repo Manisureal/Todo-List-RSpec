@@ -66,4 +66,21 @@ RSpec.describe TodoListItemsController, type: :controller do
 		end
 	end
 
+	describe "GET edit" do
+		before do 
+			todo_list_items.each do |item|
+				get :edit, params: { id: item.id }
+			end
+		end
+
+		it "should respond with http status ok(:200)" do
+			expect(response).to have_http_status(200)
+		end
+
+		it "should render template :edit" do
+			expect(response).to render_template(:edit)
+		end
+	end
+
+	
 end

@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   get 'todo_lists/:id/todo_list_items/new', to: 'todo_list_items#new'
   post 'todo_lists/:id/todo_list_items', to: 'todo_list_items#create'
   get 'todo_lists/:id/todo_list_items/:id', to: 'todo_list_items#show'
+  get 'todo_lists/:id/todo_list_items/edit', to: 'todo_list_items#edit'
 end
