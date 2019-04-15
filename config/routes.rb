@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   delete 'todo_lists/:id', to: 'todo_lists#destroy'
 
   get 'todo_lists/:id/todo_list_items/new', to: 'todo_list_items#new'
+  post 'todo_lists/:id/todo_list_items', to: 'todo_list_items#create'
   get 'todo_lists/:id/todo_list_items/:id', to: 'todo_list_items#show'
 end
