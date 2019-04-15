@@ -11,16 +11,30 @@ RSpec.describe TodoListItemsController, type: :controller do
 		todo_list.todo_list_items
 	end
  	
-	before do
-		todo_list_items.each do |item|
-	 		get :show, params: { id: item.id }
+
+	describe "GET new" do
+		before(:example) { get :new, params: { id: todo_list.id }}
+
+		it "should respond with http status 200 :ok" do
+			expect(response).to have_http_status(200)
+		end
+
+		it "should render template :new" do
+			expect(response).to render_template(:new)
 		end
 	end
 
 	describe "GET show" do
+		before do
+			todo_list_items.each do |item|
+		 		get :show, params: { id: item.id }
+			end
+		end
+
 		it "should respond with http status 200 :ok" do
 			expect(response).to have_http_status(200)
 		end
+
 		it "should render template :show for specific todo_list_item" do
 			expect(response).to render_template(:show)
 		end
