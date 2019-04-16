@@ -27,7 +27,7 @@ RSpec.describe TodoListItemsController, type: :controller do
 	describe "POST create" do
 		
 		context "with valid params" do
-			before { post :create, params: { id: todo_list.id, todo_list_items: { description: "need to call BT for connection arrangements", completed: false } } }
+			before { post :create, params: { id: todo_list.id, todo_list_item: { description: "need to call BT for connection arrangements", completed: false } } }
 
 			it "should redirect back to todo_list new form" do
 				expect(response).to redirect_to("todo_lists/:#{todo_list.id}/todo_list_items/new")
@@ -38,7 +38,7 @@ RSpec.describe TodoListItemsController, type: :controller do
 		context "with invalid params" do
 			let(:todo_list_item) { TodoListItem.create(todo_list_id: todo_list.id ) }
 
-			before { post :create, params: { id: todo_list.id, todo_list_items: { description: "", completed: "" }}}
+			before { post :create, params: { id: todo_list.id, todo_list_item: { description: "", completed: "" }}}
 
 			it "should render new" do
 				expect(response).to render_template :new
@@ -82,5 +82,32 @@ RSpec.describe TodoListItemsController, type: :controller do
 		end
 	end
 
-	
+	describe "PATCH update" do
+
+		context "with valid attributes" do
+		# before { patch :update, params: { todo_list_id: todo_list.id, id: todo_list_items.first.id, description: "Updated" } }
+		before { patch :update, params: { id: todo_list_items.first.id, todo_list_item: { description: "Updated", todo_list_id: todo_list.id } } }
+			
+			it "should redirect to show page" do
+				expect(response).to redirect_to "/todo_lists/#{todo_list.id}"
+			end
+
+			it "should flash success message" do
+				expect(flash[:success]).to match("todo list item was successfully updated!")
+			end
+		end
+
+		context "with invalid attributes" do
+		let(:todo_list_item) { TodoListItem.create(todo_list_id: todo_list.id ) }
+
+		before { patch :update, params: { id: todo_list_items.first.id, todo_list_item: { todo_list_id: todo_list.id, description: "" } } }
+			it "should render edit" do
+				expect(response).to render_template(:edit)
+			end
+
+			it "should flash error message" do
+				expect(flash[:error]).to match(todo_list_item.errors.full_messages)
+			end
+		end
+	end
 end

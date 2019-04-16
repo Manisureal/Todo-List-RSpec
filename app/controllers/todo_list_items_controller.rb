@@ -24,10 +24,23 @@ class TodoListItemsController < ApplicationController
 		
 	end
 
+	def update
+		# @todo_list = TodoList.find(params[:todo_list_id])
+		@todo_list_item = TodoListItem.find(params[:id])
+		if @todo_list_item.update_attributes(todo_list_items_params)
+			redirect_to "/todo_lists/#{params[:todo_list_item][:todo_list_id]}"
+			flash[:success] = "todo list item was successfully updated!"
+		else
+			render :edit
+			flash[:error] = @todo_list_item.errors.full_messages
+		end
+		
+	end
+
 	private
 
 	def todo_list_items_params
-		params.require(:todo_list_items).permit(:description, :completed)
+		params.require(:todo_list_item).permit(:description, :completed)
 	end
 
 end
