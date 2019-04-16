@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   get 'todo_list_items/:id', to: 'todo_list_items#show'
   get 'todo_list_items/edit', to: 'todo_list_items#edit'
   patch 'todo_list_items/:id', to: 'todo_list_items#update'
-  
+  delete 'todo_list_items/:id', to: 'todo_list_items#destroy'
+
 end

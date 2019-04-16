@@ -34,7 +34,14 @@ class TodoListItemsController < ApplicationController
 			render :edit
 			flash[:error] = @todo_list_item.errors.full_messages
 		end
-		
+	end
+
+	def destroy
+		@todo_list_item = TodoListItem.find(params[:id])
+		@todo_list_item.destroy
+		redirect_to "todo_lists/#{@todo_list_item.todo_list.id}"
+		flash[:success] = "todo list item successfully deleted!"
+
 	end
 
 	private

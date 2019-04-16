@@ -110,4 +110,16 @@ RSpec.describe TodoListItemsController, type: :controller do
 			end
 		end
 	end
+
+	describe "DELETE destroy" do
+		before { delete :destroy, params: { id: todo_list_items.first.id }}
+
+		it "should redirect to todo list index" do
+			expect(response).to redirect_to "todo_lists/#{todo_list.id}"
+		end
+
+		it "should flash success" do
+			expect(flash[:success]).to match("todo list item successfully deleted!")
+		end
+	end
 end
