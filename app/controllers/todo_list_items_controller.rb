@@ -37,7 +37,8 @@ class TodoListItemsController < ApplicationController
 
 	def destroy
 		@todo_list_item.destroy
-		redirect_to "todo_lists/#{@todo_list_item.todo_list.id}"
+		# redirect_to "todo_lists/#{@todo_list_item.todo_list.id}"
+		redirect_to todo_list_path(@todo_list_item.todo_list)
 		flash[:success] = "todo list item successfully deleted!"
 
 	end
