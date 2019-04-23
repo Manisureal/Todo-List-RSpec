@@ -12,6 +12,7 @@ class TodoListItemsController < ApplicationController
 		@todo_list_items = @todo_list.todo_list_items.new(todo_list_items_params)
 		if @todo_list_items.save
 			redirect_to todo_list_path(@todo_list)
+			flash[:success] = "Your todo list item was successfully added!"
 		else
 			redirect_to todo_list_path(@todo_list)
 			flash[:error] = @todo_list_items.errors.full_messages

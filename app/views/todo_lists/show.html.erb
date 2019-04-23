@@ -4,6 +4,8 @@
 	<% flash[:error].each do |e| %>
 		<p style="color:red"><%= e %></p>
 	<% end %>
+<% else %>
+	<p style="color:green"><%= flash[:success] %></p>
 <% end %>
 
 <%= form_for @todo_list.todo_list_items.build do |f| %> 
