@@ -1,0 +1,18 @@
+<h2><%= @todo_list.title %></h2> 
+
+<% if flash[:error] %>
+	<% flash[:error].each do |e| %>
+		<p style="color:red"><%= e %></p>
+	<% end %>
+<% end %>
+
+<%= form_for @todo_list.todo_list_items.build do |f| %> 
+	<%= f.text_field :description, place_holder: "write your description here" %>
+	<%= f.hidden_field :todo_list_id, value: @todo_list.id %>
+	<%= f.submit "Create a todo list item" %>
+<% end %>
+
+<h3>Todo List Items:</h3>
+<% @todo_list.todo_list_items.each do |item| %>
+	<p><%= item.description %></p>
+<% end %>

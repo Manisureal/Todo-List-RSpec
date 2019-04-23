@@ -7,12 +7,13 @@ class TodoListItemsController < ApplicationController
 	end
 
 	def create
-		@todo_list = TodoList.find(params[:id])
+		# @todo_list = TodoList.find(params[:todo_list_item][:todo_list_id])
+		@todo_list = TodoList.find(todo_list_items_params[:todo_list_id])
 		@todo_list_items = @todo_list.todo_list_items.new(todo_list_items_params)
 		if @todo_list_items.save
-			redirect_to "todo_lists/:#{@todo_list.id}/todo_list_items/new"
+			redirect_to todo_list_path(@todo_list)
 		else
-			render :new #"todo_lists/:#{@todo_list.id}/todo_list_items/new"
+			redirect_to todo_list_path(@todo_list)
 			flash[:error] = @todo_list_items.errors.full_messages
 		end
 	end
@@ -43,7 +44,7 @@ class TodoListItemsController < ApplicationController
 	private
 
 	def todo_list_items_params
-		params.require(:todo_list_item).permit(:description, :completed)
+		params.require(:todo_list_item).permit(:description, :completed, :todo_list_id)
 	end
 
 	def set_todo_list_item
