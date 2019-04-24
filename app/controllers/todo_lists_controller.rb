@@ -34,7 +34,7 @@ class TodoListsController < ApplicationController
 		respond_to do |format|
 			format.html do
 				if @todo_list.save
-				   redirect_to :index
+				   redirect_to todo_lists_path
 				   flash[:success] = "TodoList is successfully created"
 				 else
 				   render :new 

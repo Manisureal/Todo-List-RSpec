@@ -1,6 +1,6 @@
 <h2>Create a Todo List</h2>
 <%= @todo_list.errors.any? ? @todo_list.errors.full_messages : nil %>
-<%= form_for @todo_list do |f| %>
+<%= form_for @todo_list, url: { action: :create } do |f| %>
 	<%= f.text_field :title, placeholder: "Enter a Title" %>
 	<%= f.submit %>
 <% end %>

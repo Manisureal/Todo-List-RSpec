@@ -1,13 +1,15 @@
-<h1>Todo List Item</h1>
+<h1><%= @todo_list.improve_title_text %></h1>
 <%= form_for @todo_list, url: { action: "update" } do |f| %>
 	<%= f.text_field :title %>
 <%= f.submit %>
 <% end %>
 
-<h2><%= @todo_list.improve_title_text  %> items:</h2>
+<h2>Items:</h2>
 <% @todo_list.todo_list_items.each do |item|  %>
 	<%= form_tag todo_list_item_path(item), method: :patch do %>
 		<%= text_field_tag :description, item.description, name: "todo_list_item[description]" %>
-		<%= submit_tag %>
+		<%= submit_tag "Update" %>
 	<% end %>
 <% end %>
+<br>
+<%= link_to "Homepage", todo_lists_path %>

@@ -1,3 +1,4 @@
+<button><%= link_to "New Todo List", todo_lists_new_path %></button>
 <h1 style="text-align:center;">My Todo Lists</h1>
 
 <% if @todo_lists.empty? %>
@@ -6,9 +7,12 @@
 	<% @todo_lists.each do |todo_list| %>
 		<ul> 
 			<b>Title:</b> <%= todo_list.title %> 
-			<li><%= link_to "view", todo_list_path(todo_list.id) %></li>
-			<li><%= link_to "edit", edit_todo_list_path(todo_list.id) %></li>
-			<li><%= link_to "delete", delete_todo_list_path(todo_list.id), method: :delete, data: { confirm: "Are you sure?" } %></li>
+			<p>
+				<%= link_to "view", todo_list_path(todo_list.id) %> |
+				<%= link_to "edit", edit_todo_list_path(todo_list.id) %> |
+				<%= link_to "delete", delete_todo_list_path(todo_list.id), method: :delete, data: { confirm: "Are you sure?" } %>
+			</p>
 		</ul>
 	<% end %>
 <% end %>
+
