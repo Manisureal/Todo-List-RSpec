@@ -16,5 +16,9 @@
 
 <h3>Todo List Items:</h3>
 <% @todo_list.todo_list_items.reload.each do |item| %>
-	<p><%= item.description %> - <%= link_to "Delete", delete_todolist_items_path(item), method: :delete, data: { confirm: "Are you srue?"} %></p>
+	<p>
+		<%= item.description %> - 
+		<%= link_to "Delete", todo_list_item_path(item), method: :delete, data: { confirm: "Are you srue?"} %> -
+		<%= link_to "Edit", edit_todo_list_item_path(item) %>
+	</p>
 <% end %>
