@@ -6,9 +6,13 @@
 
 <h2>Items:</h2>
 <% @todo_list.todo_list_items.each do |item|  %>
-	<%= form_tag todo_list_item_path(item), method: :patch do %>
-		<%= text_field_tag :description, item.description, name: "todo_list_item[description]" %>
-		<%= submit_tag "Update" %>
+	<%#= form_tag todo_list_item_path(item), method: :patch do %>
+		<%#= text_field_tag :description, item.description, name: "todo_list_item[description]" %>
+		<%#= submit_tag "Update" %>
+	<%# end %>
+	<%= form_for item do |f| %>
+		<%= f.text_field :description %>
+		<%= f.submit %>
 	<% end %>
 <% end %>
 <br>

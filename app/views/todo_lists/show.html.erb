@@ -17,10 +17,20 @@
 <h3>Todo List Items:</h3>
 <% @todo_list.todo_list_items.reload.each do |item| %>
 	<p>
-		<%= item.description %> - 
-		<%= link_to "Delete", todo_list_item_path(item), method: :delete, data: { confirm: "Are you srue?"} %> -
-		<%= link_to "Edit", edit_todo_list_item_path(item) %>
+		<% if item.completed? %>
+			<span id='desc'>item.description</span> 
+		<% else %>
+			<%= item.description %>
+		<% end %>
+		<%= link_to "Edit", edit_todo_list_item_path(item) %> |
+		<%= link_to "Delete", todo_list_item_path(item), method: :delete, data: { confirm: "Are you sure?"} %>
 	</p>
 <% end %>
 
 <%= link_to "Homepage", todo_lists_path %>
+
+<style>
+	#desc {
+		text-decoration: line-through;
+	}
+</style>
