@@ -27,7 +27,8 @@ class TodoListItemsController < ApplicationController
 
 	def update
 		if @todo_list_item.update_attributes(todo_list_items_params)
-			redirect_to "/todo_lists/#{params[:todo_list_item][:todo_list_id]}"
+			# redirect_to "/todo_lists/#{params[:todo_list_item][:todo_list_id]}"
+			redirect_to todo_list_path(@todo_list_item.todo_list)
 			flash[:success] = "todo list item was successfully updated!"
 		else
 			render :edit
