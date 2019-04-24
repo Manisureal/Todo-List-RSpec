@@ -1,5 +1,9 @@
-<%#= form_for @todo_list_item, url: { action: "update" } do |f| %>
+<h2>Item: <%= @todo_list_item.description %></h2>
 <%= form_for @todo_list_item do |f| %>
-	<%= f.text_field :description %>
+	<p>Description: <%= f.text_field :description %></p>	
+	<p>Done: <%= f.check_box :completed %></p>	
 	<%= f.submit "Update" %>
 <% end %>
+<br>
+<%= link_to "Todo List", todo_list_path(@todo_list_item.todo_list) %> |
+<%= link_to "Home Page", todo_lists_path %>

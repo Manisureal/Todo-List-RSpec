@@ -12,6 +12,8 @@
 	<%# end %>
 	<%= form_for item do |f| %>
 		<%= f.text_field :description %>
+		<%= f.label :done %>
+		<%= f.check_box :completed %>
 		<%= f.submit %>
 	<% end %>
 <% end %>
