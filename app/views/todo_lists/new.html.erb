@@ -1,6 +1,18 @@
 <h2>Create a Todo List</h2>
-<%= @todo_list.errors.any? ? @todo_list.errors.full_messages : nil %>
+
+<% if @todo_list.errors.any? %>
+	<% if flash[:error] %>
+		<p style="color:red;"><%= display_form_errors(@todo_list) %></p>
+	<% else  %>
+		<p style="color:green;"><%= display_form_errors(@todo_list) %></p>
+	<% end %>
+<% end %>
+
 <%= form_for @todo_list, url: { action: :create } do |f| %>
 	<%= f.text_field :title, placeholder: "Enter a Title" %>
 	<%= f.submit %>
 <% end %>
+
+<br>
+
+<button><%= link_to "Home Page", todo_lists_path %></button>
