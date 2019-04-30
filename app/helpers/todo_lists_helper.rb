@@ -1,7 +1,9 @@
 module TodoListsHelper
-	def display_form_errors(error)
-		flash[error].each do |e|
-			return e
+	def display_form_errors(errors)
+		if errors.count > 1
+			errors[0..-2].join() + ", " + errors[-1]
+		else
+			errors.pop if errors.count == 1
 		end
 	end
 end

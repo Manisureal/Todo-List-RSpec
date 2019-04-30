@@ -1,15 +1,12 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the TodoListsHelper. For example:
-#
-# describe TodoListsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe TodoListsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#display_form_errors(error)" do
+
+  	let(:errors) { ['error1', 'error2'] }
+
+  	it "should display error message when creating/editing todolist or todolist item" do
+  		expect(helper.display_form_errors(errors)).to eq('error1, error2')
+  	end
+  end
 end
