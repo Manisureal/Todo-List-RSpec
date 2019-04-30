@@ -34,11 +34,12 @@ class TodoListsController < ApplicationController
 		respond_to do |format|
 			format.html do
 				if @todo_list.save
-				   redirect_to todo_lists_path
 				   flash[:success] = "TodoList is successfully created"
+				   redirect_to todo_list_path(@todo_list)
 				 else
+				   # flash[:error] =  "Error while creating TodoList"
+				   flash[:error] =  @todo_list.errors.full_messages
 				   render :new 
-				   flash[:error] =  "Error while creating TodoList"
 				end
 			end
 			format.json do

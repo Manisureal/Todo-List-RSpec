@@ -1,12 +1,7 @@
 <h2><%= @todo_list.improve_title_text %></h2> 
 
-<% if flash[:error] %>
-	<% flash[:error].each do |e| %>
-		<p style="color:red"><%= e %></p>
-	<% end %>
-<% else %>
-	<p style="color:green"><%= flash[:success] %></p>
-<% end %>
+<p style="color:red;"><%= display_form_errors(:error) if flash[:error] %></p>
+<p style="color:green;"><%= flash[:success] if flash[:success] %></p>
 
 <%= form_for @todo_list.todo_list_items.build do |f| %> 
 	<%= f.text_field :description, place_holder: "write your description here" %>

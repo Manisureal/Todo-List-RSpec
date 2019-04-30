@@ -1,9 +1,14 @@
 <h2>Item: <%= @todo_list_item.description %></h2>
+
+<p style="color:red;"><%= display_form_errors(:error) if flash[:error] %></p>
+<p style="color:green;"><%= flash[:success] if flash[:success] %></p>
+
 <%= form_for @todo_list_item do |f| %>
 	<p>Description: <%= f.text_field :description %></p>	
 	<p>Done: <%= f.check_box :completed %></p>	
 	<%= f.submit "Update" %>
 <% end %>
+
 <br>
 <%= link_to "Todo List", todo_list_path(@todo_list_item.todo_list) %> |
 <%= link_to "Home Page", todo_lists_path %>

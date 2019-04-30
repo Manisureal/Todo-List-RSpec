@@ -1,12 +1,7 @@
 <h2>Create a Todo List</h2>
 
-<% if @todo_list.errors.any? %>
-	<% if flash[:error] %>
-		<p style="color:red;"><%= display_form_errors(@todo_list) %></p>
-	<% else  %>
-		<p style="color:green;"><%= display_form_errors(@todo_list) %></p>
-	<% end %>
-<% end %>
+<p style="color:red;"><%= display_form_errors(:error) if flash[:error] %></p>
+<p style="color:green;"><%= flash[:success] if flash[:success] %></p>
 
 <%= form_for @todo_list, url: { action: :create } do |f| %>
 	<%= f.text_field :title, placeholder: "Enter a Title" %>
