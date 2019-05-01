@@ -27,10 +27,12 @@ RSpec.describe TodoListItemsController, type: :controller do
 	describe "POST create" do
 		
 		context "with valid params" do
-			before { post :create, params: { id: todo_list.id, todo_list_item: { description: "need to call BT for connection arrangements", completed: false } } }
-
+			# before { post :create, params: { todo_list_id: todo_list.id, todo_list_item: { description: "need to call BT for connection arrangements", completed: false } } } 
+			before { post :create, params: { todo_list_item: { description: "need to call BT for connection arrangements", todo_list_id: todo_list.id, completed: false } } } 
+	
 			it "should redirect back to todo_list new form" do
-				expect(response).to redirect_to("todo_lists/:#{todo_list.id}/todo_list_items/new")
+				# byebugclear
+				expect(response).to redirect_to(todo_list_path(todo_list))
 			end
 		end
 		
@@ -38,10 +40,10 @@ RSpec.describe TodoListItemsController, type: :controller do
 		context "with invalid params" do
 			let(:todo_list_item) { TodoListItem.create(todo_list_id: todo_list.id ) }
 
-			before { post :create, params: { id: todo_list.id, todo_list_item: { description: "", completed: "" }}}
+			before { post :create, params: { todo_list_item: { description: "", todo_list_id: todo_list.id, completed: "" }}}
 
 			it "should render new" do
-				expect(response).to render_template :new
+				expect(response).to redirect_to todo_list_path(todo_list)
 			end
 
 			it "should display error messages" do
@@ -93,7 +95,8 @@ RSpec.describe TodoListItemsController, type: :controller do
 			end
 
 			it "should flash success message" do
-				expect(flash[:success]).to match("todo list item was successfully updated!")
+				# expect(flash[:success]).to match("todo list item was successfully updated!")
+				expect(flash[:success]).to match("Todo list item was successfully updated!")
 			end
 		end
 
@@ -115,7 +118,7 @@ RSpec.describe TodoListItemsController, type: :controller do
 		before { delete :destroy, params: { id: todo_list_items.first.id }}
 
 		it "should redirect to todo list index" do
-			expect(response).to redirect_to "todo_lists/#{todo_list.id}"
+			expect(response).to redirect_to todo_list_path(todo_list)
 		end
 
 		it "should flash success" do

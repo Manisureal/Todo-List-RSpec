@@ -8,6 +8,7 @@ class TodoListItemsController < ApplicationController
 
 	def create
 		# @todo_list = TodoList.find(params[:todo_list_item][:todo_list_id])
+		# byebug
 		@todo_list = TodoList.find(todo_list_items_params[:todo_list_id])
 		@todo_list_items = @todo_list.todo_list_items.new(todo_list_items_params)
 		if @todo_list_items.save
