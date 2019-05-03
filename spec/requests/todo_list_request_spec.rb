@@ -19,5 +19,26 @@ RSpec.describe "Todo List", :type => :request do
       expect(assigns['todo_lists']).to match(todo_lists)
     end
   end
-end
 
+  describe "GET new/POST create" do
+    it "should go to new page and render a new form" do
+      get todo_lists_new_path
+      expect(response).to have_http_status(200)
+      expect(response).to render_template(:new)
+    end
+
+    it "should create a new todo list and then redirect to it" do
+      post '/todo_lists', params: { todo_list: { title: "First Todo List" } }
+      expect(response).to redirect_to(assigns :todo_list)
+      follow_redirect!
+
+      expect(response).to render_template :show
+      expect(response.body).to include(flash[:success])
+    end
+
+    it "should not render a wrong template" do
+      get todo_lists_new_path
+      expect(response).not_to render_template :show
+    end
+  end
+end
