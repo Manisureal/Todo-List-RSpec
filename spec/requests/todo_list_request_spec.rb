@@ -22,13 +22,13 @@ RSpec.describe "Todo List", :type => :request do
 
   describe "GET new/POST create" do
     it "should go to new page and render a new form" do
-      get todo_lists_new_path
+      get new_todo_list_path
       expect(response).to have_http_status(200)
       expect(response).to render_template(:new)
     end
 
     it "should create a new todo list and then redirect to it" do
-      post '/todo_lists', params: { todo_list: { title: "First Todo List" } }
+      post new_todo_list_path, params: { todo_list: { title: "First Todo List" } }
       expect(response).to redirect_to(assigns :todo_list)
       follow_redirect!
 
@@ -37,7 +37,7 @@ RSpec.describe "Todo List", :type => :request do
     end
 
     it "should not render a wrong template" do
-      get todo_lists_new_path
+      get new_todo_list_path
       expect(response).not_to render_template :show
     end
   end
@@ -53,4 +53,28 @@ RSpec.describe "Todo List", :type => :request do
       expect(assigns :todo_list).to eq todo_list
     end
   end
+
+  describe "GET edit/PATCH update" do
+    let(:todo_list) { TodoList.create title: "Todo List to be edited" }
+
+    it "should go to edit page and display current todo list to edit" do
+      get edit_todo_list_path(todo_list)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template :edit
+      expect(assigns :todo_list).to eq todo_list
+    end
+
+    it "should update todo list and redirect to todo list" do
+      patch update_todo_list_path(todo_list), params: { todo_list: { title: "I am updated now" } }
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(assigns :todo_list)
+      follow_redirect!
+      expect(response.body).to include(flash[:success])
+      expect(assigns :todo_list).to eq todo_list
+      todo_list.reload
+      expect(todo_list.title).to eq('I am updated now')
+    end
+  end
 end
+
+

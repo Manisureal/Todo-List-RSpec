@@ -1,8 +1,8 @@
-<button><%= link_to "New Todo List", todo_lists_new_path %></button>
+<button><%= link_to "New Todo List", new_todo_list_path %></button>
 <h1 style="text-align:center;">My Todo Lists</h1>
 
 <% if @todo_lists.empty? %>
-	<%= link_to "Create your first Todo List", todo_lists_new_path %>
+	<%= link_to "Create your first Todo List", new_todo_list_path %>
 <% else %>
 	<% @todo_lists.each do |todo_list| %>
 		<ul> 
