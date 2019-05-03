@@ -41,4 +41,16 @@ RSpec.describe "Todo List", :type => :request do
       expect(response).not_to render_template :show
     end
   end
+
+  describe "GET show" do
+
+    let(:todo_list) { TodoList.create title: "my show todo list" }
+
+    it "should show a todo_list and display its content" do
+      get todo_list_path(todo_list)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template :show
+      expect(assigns :todo_list).to eq todo_list
+    end
+  end
 end
