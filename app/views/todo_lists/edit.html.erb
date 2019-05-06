@@ -1,7 +1,7 @@
 <h1><%= @todo_list.improve_title_text %></h1>
 
 <% if flash[:error] %>
-	<%= display_form_errors(flash[:error]) %>
+	<p style="color:red"><%= display_form_errors(flash[:error]) %></p>
 <% end %>
 
 <%= form_for @todo_list, url: { action: "update" } do |f| %>
