@@ -63,17 +63,28 @@ RSpec.describe "Todo List", :type => :request do
       expect(response).to render_template :edit
       expect(assigns :todo_list).to eq todo_list
     end
-
-    it "should update todo list and redirect to todo list" do
-      patch update_todo_list_path(todo_list), params: { todo_list: { title: "I am updated now" } }
-      expect(response).to have_http_status(:redirect)
-      expect(response).to redirect_to(assigns :todo_list)
-      follow_redirect!
-      expect(response.body).to include(flash[:success])
-      expect(assigns :todo_list).to eq todo_list
-      todo_list.reload
-      expect(todo_list.title).to eq('I am updated now')
+    
+    context "with valid params" do
+      it "should update todo list and redirect to todo list" do
+        patch update_todo_list_path(todo_list), params: { todo_list: { title: "I am updated now" } }
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(assigns :todo_list)
+        follow_redirect!
+        expect(response.body).to include(flash[:success])
+        expect(assigns :todo_list).to eq todo_list
+        todo_list.reload
+        expect(todo_list.title).to eq('I am updated now')
+      end
     end
+
+    context "without valid params" do
+      it "should not update and display an error message" do
+        patch update_todo_list_path(todo_list), { params: { todo_list: { title: "" } } }
+        expect(response).not_to redirect_to(assigns :todo_list)
+        expect(response.body).to include flash[:error]
+      end
+    end
+
   end
 
   describe "DELETE destroy" do

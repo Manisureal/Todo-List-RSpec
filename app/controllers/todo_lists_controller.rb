@@ -68,8 +68,8 @@ class TodoListsController < ApplicationController
 			redirect_to todo_list_path(@todo_list.id)
 			flash[:success] = "TodoList successfully Updated!"
 		else
-			render :edit
 			flash[:error] = "TodoList update failed!"
+			render :edit
 		end
 		# byebug
 	end
