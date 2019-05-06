@@ -77,7 +77,7 @@ class TodoListsController < ApplicationController
 	def destroy
 		@todo_list = TodoList.find(params[:id])
 		@todo_list.destroy 
-		redirect_to :index
+		redirect_to todo_lists_path
 		flash[:notice] = "Todolist successfully deleted!"
 	end
 

@@ -1,6 +1,10 @@
 <button><%= link_to "New Todo List", new_todo_list_path %></button>
 <h1 style="text-align:center;">My Todo Lists</h1>
 
+<% if flash[:notice] %>
+	<%= flash[:notice] %>
+<% end %>
+
 <% if @todo_lists.empty? %>
 	<%= link_to "Create your first Todo List", new_todo_list_path %>
 <% else %>

@@ -75,4 +75,17 @@ RSpec.describe "Todo List", :type => :request do
       expect(todo_list.title).to eq('I am updated now')
     end
   end
+
+  describe "DELETE destroy" do
+    let(:todo_list) { TodoList.create title: "todo list to be deleted!" }
+
+    it "should delete a todolist and redirect to index" do
+      delete delete_todo_list_path(todo_list)
+      expect(response).to redirect_to(assigns :todo_list)
+      follow_redirect!
+      expect(response.body).to include(flash[:notice])
+      expect(response).to have_http_status(200)
+      expect(assigns :todo_list).not_to eq todo_list
+    end
+  end
 end
