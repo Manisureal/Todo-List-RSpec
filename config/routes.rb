@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get 'index', to: 'todo_lists#index', as: 'todo_lists'
   get 'todo_lists/new', to: 'todo_lists#new', as: 'new_todo_list'
-  post 'todo_lists', to: 'todo_lists#create'
+  post 'todo_lists', to: 'todo_lists#create', as: 'create_todo_list'
   get '/todo_lists/:id', to: 'todo_lists#show', as: 'todo_list'
   get '/todo_lists/:id/edit', to: 'todo_lists#edit', as: 'edit_todo_list'
   patch '/todo_lists/:id', to: 'todo_lists#update', as: 'update_todo_list'

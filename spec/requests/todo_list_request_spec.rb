@@ -28,7 +28,7 @@ RSpec.describe "Todo List", :type => :request do
     end
 
     it "should create a new todo list and then redirect to it" do
-      post new_todo_list_path, params: { todo_list: { title: "First Todo List" } }
+      post create_todo_list_path, params: { todo_list: { title: "First Todo List" } }
       expect(response).to redirect_to(assigns :todo_list)
       follow_redirect!
 
@@ -76,5 +76,3 @@ RSpec.describe "Todo List", :type => :request do
     end
   end
 end
-
-
