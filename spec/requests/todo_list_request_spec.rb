@@ -40,6 +40,15 @@ RSpec.describe "Todo List", :type => :request do
       get new_todo_list_path
       expect(response).not_to render_template :show
     end
+
+    # let(:todo_list) { TodoList.create title: "show todo list items for this" }
+    # let(:todo_list_items) { todo_list.todo_list_items.build }
+    # it "should display a form for todo list items" do
+    #   # byebug
+    #   dbl = double("Todo List", title: "double todo list", id: 1)
+    #   p dbl.title
+    #   get new_todo_list_item_path
+    # end
   end
 
   describe "GET show" do

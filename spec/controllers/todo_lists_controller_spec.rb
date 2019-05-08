@@ -68,14 +68,15 @@ RSpec.describe TodoListsController, type: :controller do
 
 	describe "POST create" do
 		context "Successful: Create a Todo List format:HTML" do
-			before { post :create, params: { todo_list: { title: "my first todo list" } } }
+			let(:todo_list) { { title: "my first todo list" } }
+			before { post :create, params: { todo_list: todo_list } }
 
 			it "should respond with status 302" do
 				expect(response).to have_http_status(302)
 			end
 
-			it "should redirect to index page" do
-				expect(response).to redirect_to(:index)
+			it "should redirect to todo list" do
+				expect(response).to redirect_to todo_list_path(assigns :todo_list)
 			end
 
 			it "should flash success message" do
@@ -95,7 +96,7 @@ RSpec.describe TodoListsController, type: :controller do
 			end
 
 			it "should respond with flash error message" do
-				expect(flash[:error]).to match("Error while creating TodoList")
+				expect(flash[:error]).to match(flash[:error])
 			end
 		end
 
@@ -187,7 +188,7 @@ RSpec.describe TodoListsController, type: :controller do
 			end
 
 			it "should flash error message" do
-				expect(flash[:error]).to eq "TodoList update failed!"
+				expect(flash[:error].first).to eq "Title can't be blank"
 				expect(flash[:error]).to be_present
 			end
 		end
@@ -199,7 +200,7 @@ RSpec.describe TodoListsController, type: :controller do
 		before { delete :destroy, params: { id: todo_list } }
 
 		it "shoudld redirect to index page" do
-			expect(response).to redirect_to(:index)
+			expect(response).to redirect_to todo_lists_path
 		end
 
 		it "flash notice to confirm deletion" do
