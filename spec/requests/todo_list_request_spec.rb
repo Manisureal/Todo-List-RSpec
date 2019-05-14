@@ -90,6 +90,7 @@ RSpec.describe "Todo List", :type => :request do
       it "should not update and display an error message" do
         patch update_todo_list_path(todo_list), { params: { todo_list: { title: "" } } }
         expect(response).not_to redirect_to(assigns :todo_list)
+        expect(response).to render_template :edit
         expect(response.body).to include flash[:error]
       end
     end
