@@ -188,7 +188,7 @@ RSpec.describe TodoListsController, type: :controller do
 			end
 
 			it "should flash error message" do
-				expect(flash[:error].first).to eq "Title can't be blank"
+				expect(flash[:error]).to eq "Title cant be blank"
 				expect(flash[:error]).to be_present
 			end
 		end
