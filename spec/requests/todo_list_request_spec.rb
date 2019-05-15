@@ -21,6 +21,9 @@ RSpec.describe "Todo List", :type => :request do
   end
 
   describe "GET new/POST create" do
+
+    let(:todo_list) { TodoList.create title: "show todo list items for this" }
+
     it "should go to new page and render a new form" do
       get new_todo_list_path
       expect(response).to have_http_status(200)
@@ -41,14 +44,14 @@ RSpec.describe "Todo List", :type => :request do
       expect(response).not_to render_template :show
     end
 
-    # let(:todo_list) { TodoList.create title: "show todo list items for this" }
-    # let(:todo_list_items) { todo_list.todo_list_items.build }
-    # it "should display a form for todo list items" do
-    #   # byebug
-    #   dbl = double("Todo List", title: "double todo list", id: 1)
-    #   p dbl.title
-    #   get new_todo_list_item_path
-    # end
+    it "should create a todo list item and then redirect to the todo list show page" do
+      get todo_list_path(todo_list)
+      post '/todo_list_items', params: { todo_list_item: { description: "soap", todo_list_id: todo_list.id } }
+      expect(response).to redirect_to(assigns :todo_list)
+      follow_redirect!
+      flash[:success]
+      expect(response.body).to include flash[:success]
+    end
   end
 
   describe "GET show" do
