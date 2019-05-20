@@ -67,7 +67,7 @@ RSpec.describe "Todo List", :type => :request do
 
     it "should create a todo_list_item and then display it under its todo_list" do
       get todo_list_path(todo_list)
-      post "/todo_list_items", params: { todo_list_item: { description: "Tissue", todo_list_id: todo_list.id } }
+      post todo_list_items_path, params: { todo_list_item: { description: "Tissue", todo_list_id: todo_list.id } }
       expect(response).to redirect_to assigns :todo_list
       follow_redirect!
       expect(response.body).to include todo_list.todo_list_items.first.description
