@@ -32,7 +32,7 @@ class TodoListItemsController < ApplicationController
 			redirect_to todo_list_path(@todo_list_item.todo_list)
 			flash[:success] = "Todo list item was successfully updated!"
 		else
-			flash[:error] = @todo_list_item.errors.full_messages
+			flash[:error] = @todo_list_item.errors.full_messages.first.gsub("'",'')
 			render :edit
 		end
 	end

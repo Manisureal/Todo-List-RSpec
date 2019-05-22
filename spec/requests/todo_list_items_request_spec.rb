@@ -20,5 +20,13 @@ RSpec.describe "Todo List Items", :type => :request do
         expect(response.body).to include flash[:success]
       end
     end
+
+    context "with Invalid Params" do
+      it "should render edit and flash error" do
+        patch todo_list_item_path(todo_list_item), params: { todo_list_item: { description: "" } }
+        expect(response).to render_template :edit
+        expect(response.body).to include flash[:error]
+      end
+    end
   end
 end
