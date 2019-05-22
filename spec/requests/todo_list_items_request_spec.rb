@@ -12,6 +12,11 @@ RSpec.describe "Todo List Items", :type => :request do
       expect(response.body).to include todo_list_item.description
     end
 
+    it "should not go to show page" do
+      get edit_todo_list_item_path(todo_list_item)
+      expect(response).not_to render_template :show
+    end
+
     context "with Valid Params" do
       it "should update the todo_list_item and redirect_to todo_list" do
         patch todo_list_item_path(todo_list_item), params: { todo_list_item: { description: "updated todo list item" } }
