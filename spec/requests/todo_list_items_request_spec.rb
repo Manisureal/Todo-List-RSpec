@@ -34,4 +34,17 @@ RSpec.describe "Todo List Items", :type => :request do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    let(:todo_list) { TodoList.create title: "first todo list" }
+    let(:todo_list_item) { todo_list.todo_list_items.create description: "todo list item to be deleted" } 
+    
+    it "should delete todo_list_item and redirect to todo_list" do
+      delete todo_list_item_path(todo_list_item)
+      expect(response).to redirect_to todo_list_path(todo_list)
+      expect(response).to have_http_status :redirect
+      follow_redirect!
+      expect(response.body).to include flash[:success]
+    end
+  end
 end
