@@ -83,6 +83,12 @@ RSpec.describe "Todo List", :type => :request do
       expect(response).to render_template :edit
       expect(assigns :todo_list).to eq todo_list
     end
+
+    it "should also display todo_list items" do
+      todo_list_item = todo_list.todo_list_items.create description: "first item" 
+      get edit_todo_list_path(todo_list)
+      expect(response.body).to include todo_list_item.description
+    end
     
     context "with valid params" do
       it "should update todo list and redirect to todo list" do
