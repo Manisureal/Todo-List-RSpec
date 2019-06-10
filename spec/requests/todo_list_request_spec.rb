@@ -101,6 +101,14 @@ RSpec.describe "Todo List", :type => :request do
         todo_list.reload
         expect(todo_list.title).to eq('I am updated now')
       end
+
+      it "should also update the todo_list_item and then redirect to todo_list" do
+        todo_list_item = todo_list.todo_list_items.create description: "first item" 
+        patch todo_list_item_path(todo_list_item), params: { todo_list_item: { description: "updated first item"} }
+        expect(response).to redirect_to assigns :todo_list
+        todo_list_item
+        follow_redirect!
+      end
     end
 
     context "without valid params" do
@@ -110,6 +118,8 @@ RSpec.describe "Todo List", :type => :request do
         expect(response).to render_template :edit
         expect(response.body).to include flash[:error]
       end
+
+      it "should not update and flash an error message"
     end
 
   end
