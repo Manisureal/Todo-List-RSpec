@@ -76,6 +76,7 @@ RSpec.describe "Todo List", :type => :request do
 
   describe "GET edit/PATCH update" do
     let(:todo_list) { TodoList.create title: "Todo List to be edited" }
+    let(:todo_list_item) { todo_list.todo_list_items.create description: "first item" }
 
     it "should go to edit page and display current todo list to edit" do
       get edit_todo_list_path(todo_list)
@@ -103,7 +104,6 @@ RSpec.describe "Todo List", :type => :request do
       end
 
       it "should also update the todo_list_item and then redirect to todo_list" do
-        todo_list_item = todo_list.todo_list_items.create description: "first item" 
         patch todo_list_item_path(todo_list_item), params: { todo_list_item: { description: "updated first item"} }
         expect(response).to redirect_to assigns :todo_list
         todo_list_item
@@ -120,7 +120,6 @@ RSpec.describe "Todo List", :type => :request do
       end
 
       it "should not update and flash an error message" do
-        todo_list_item = todo_list.todo_list_items.create description: "second item"
         patch todo_list_item_path(todo_list_item), params: {todo_list_item: { description: "" } }
         expect(response).not_to redirect_to(assigns :todo_list_item)
         expect(response).to render_template :edit
