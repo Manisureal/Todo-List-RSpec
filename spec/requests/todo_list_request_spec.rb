@@ -119,7 +119,13 @@ RSpec.describe "Todo List", :type => :request do
         expect(response.body).to include flash[:error]
       end
 
-      it "should not update and flash an error message"
+      it "should not update and flash an error message" do
+        todo_list_item = todo_list.todo_list_items.create description: "second item"
+        patch todo_list_item_path(todo_list_item), params: {todo_list_item: { description: "" } }
+        expect(response).not_to redirect_to(assigns :todo_list_item)
+        expect(response).to render_template :edit
+        expect(response.body).to include flash[:error]
+      end
     end
 
   end
