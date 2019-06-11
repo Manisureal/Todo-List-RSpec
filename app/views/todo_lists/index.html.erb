@@ -1,22 +1,30 @@
-<button><%= link_to "New Todo List", new_todo_list_path %></button>
-<h1 style="text-align:center;">My Todo Lists</h1>
+<div class="container">
+	<h1 style="text-align:center;">My Todo Lists</h1>
 
-<% if flash[:notice] %>
-	<%= flash[:notice] %>
-<% end %>
-
-<% if @todo_lists.empty? %>
-	<%= link_to "Create your first Todo List", new_todo_list_path %>
-<% else %>
-	<% @todo_lists.each do |todo_list| %>
-		<ul> 
-			<b>Title:</b> <%= todo_list.title %> 
-			<p>
-				<%= link_to "view", todo_list_path(todo_list.id) %> |
-				<%= link_to "edit", edit_todo_list_path(todo_list.id) %> |
-				<%= link_to "delete", delete_todo_list_path(todo_list.id), method: :delete, data: { confirm: "Are you sure?" } %>
-			</p>
-		</ul>
+	<% if flash[:notice] %>
+		<%= flash[:notice] %>
 	<% end %>
-<% end %>
 
+	<% if @todo_lists.empty? %>
+		<%= link_to "Create your first Todo List", new_todo_list_path %>
+	<% else %>
+		<% @todo_lists.each do |todo_list| %>
+			<div class="row" style="border-bottom: 2px solid whitesmoke;">
+				<b>Title:</b> <%= todo_list.title %> 
+				<p>
+					<%= link_to "view", todo_list_path(todo_list.id) %> |
+					<%= link_to "edit", edit_todo_list_path(todo_list.id) %> |
+					<%= link_to "delete", delete_todo_list_path(todo_list.id), method: :delete, data: { confirm: "Are you sure?" } %>
+				</p>
+			</div>
+		<% end %>
+	<% end %>
+	<button class="waves-effect waves-light btn"><%= link_to "New TodoList", new_todo_list_path %> </button>
+</div>
+
+
+<style>
+	button a{
+		color:white;
+	}
+</style>
